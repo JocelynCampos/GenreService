@@ -8,7 +8,7 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "genre_name", length = 100, nullable = false, unique = true)
     private String name;
@@ -26,10 +26,10 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
