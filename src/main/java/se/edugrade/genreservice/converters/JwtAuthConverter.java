@@ -1,4 +1,4 @@
-package se.edugrade.genreservice.converter;
+package se.edugrade.genreservice.converters;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,6 +67,4 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
         }
         return jwt.getClaim(claimName);
      }
-
-
 }
