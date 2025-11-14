@@ -23,7 +23,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
-    @Value("Ändra")
+    @Value("Edufy_Client")
     private String recourseIdName;
 
     @Value("sub")
@@ -44,11 +44,11 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
         Map<String, Object> resourceAccess;
         Map<String, Object> resource;
 
-        if (!jwt.hasClaim("recourse_access")) {
+        if (!jwt.hasClaim("resource_access")) {
             return Set.of();
         }
 
-        resourceAccess = jwt.getClaim("recourse_access");
+        resourceAccess = jwt.getClaim("resource_access");
         if (!resourceAccess.containsKey(recourseIdName)) {
             return Set.of();
         }
