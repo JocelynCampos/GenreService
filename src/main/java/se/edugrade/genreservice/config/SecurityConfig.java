@@ -30,6 +30,8 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET,"/edufy/v1/genre/test").permitAll()
                         .requestMatchers(HttpMethod.GET, "/edufy/v1/genre/all").hasAnyRole("admin", "user")
+                        .requestMatchers(HttpMethod.GET, "/edufy/v1/genre/by-name/**").hasAnyRole("admin", "user")
+                        .requestMatchers(HttpMethod.GET, "/edufy/v1/genre/by-id/**").hasRole("admin")
                         .requestMatchers(HttpMethod.POST, "/edufy/v1/genre/add").hasRole("admin")
                         .requestMatchers(HttpMethod.PUT, "/edufy/v1/genre/update/**").hasRole("admin")
                         .requestMatchers(HttpMethod.DELETE, "/edufy/v1/genre/delete/**").hasRole("admin")

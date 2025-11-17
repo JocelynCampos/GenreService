@@ -1,13 +1,8 @@
 package se.edugrade.genreservice.controllers;
 
-
-import jakarta.servlet.http.PushBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.edugrade.genreservice.dto.GenreResponseDTO;
-import se.edugrade.genreservice.entities.Genre;
 import se.edugrade.genreservice.services.GenreService;
 
 import java.util.List;
@@ -25,5 +20,10 @@ public class CommonController {
     @GetMapping("/all")
     public ResponseEntity<List<GenreResponseDTO>> findAll() {
         return ResponseEntity.ok(genreService.findAll());
+    }
+
+    @GetMapping("/by-name/{name}")
+    public ResponseEntity<GenreResponseDTO> findByName(@PathVariable String name) {
+        return ResponseEntity.ok(genreService.findByName(name));
     }
 }

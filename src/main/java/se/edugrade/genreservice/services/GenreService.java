@@ -26,6 +26,10 @@ public class GenreService implements GenreServiceInterface {
     public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
     }
+    /***********CustomerController**************/
+
+
+
 
     /******CommonController*******/
 
@@ -43,6 +47,20 @@ public class GenreService implements GenreServiceInterface {
                 .toList();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public GenreResponseDTO findByName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is required");
+        }
+        String trimmedName = name.trim();
+
+        return genreRepository.findByNameIgnoreCase(trimmedName)
+                .map(genre -> new GenreResponseDTO(genre.getId(), genre.getName()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre with this name not found."));
+    }
+
+
     /**********AdminController************/
 
     @Override
@@ -56,11 +74,6 @@ public class GenreService implements GenreServiceInterface {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre not found"));
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public GenreResponseDTO findByName(String name) {
-        return null;
-    }
 
     @Override
     public GenreResponseDTO create(GenreRequestDTO rq) {

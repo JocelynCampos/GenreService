@@ -34,5 +34,10 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("by-id/{id}")
+    public ResponseEntity<GenreResponseDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(genreService.findById(id));
+    }
+
 
 }

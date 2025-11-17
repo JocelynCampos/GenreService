@@ -140,4 +140,37 @@ class GenreServiceTest {
         verify(genreRepo, never()).deleteById(anyLong());
         verify(genreRepo, never()).save(any());
     }
+
+    @Test
+    void create_and_findById_success() {
+        var rq = new GenreRequestDTO("Salsa");
+        when(genreRepo.existsByNameIgnoreCase("Salsa")).thenReturn(false);
+        when(genreRepo.save(any(Genre.class))).thenAnswer(inv -> {
+            Genre g = inv.getArgument(0);
+            g.setId(1L);
+            return g;
+        });
+
+        when(genreRepo.findById(1L)).thenReturn(Optional.of(genre(1L, "Salsa")));
+        GenreResponseDTO created = genreService.create(rq);
+
+        GenreResponseDTO found = genreService.findById(1L);
+
+        assertEquals(1L, created.id());
+        assertEquals("Salsa", created.name());
+
+        assertEquals(1L, found.id());
+        assertEquals("Salsa", found.name());
+
+        verify(genreRepo).existsByNameIgnoreCase("Salsa");
+        verify(genreRepo).save(argThat(g -> "Salsa".equals(g.getName())));
+        verify(genreRepo).findById(1L);
+    }
+
+    @Test
+    void create_and_findByName_success() {
+
+
+
+    }
 }
