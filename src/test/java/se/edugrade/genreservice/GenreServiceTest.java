@@ -37,7 +37,7 @@ class GenreServiceTest {
         return g;
     }
 
-    //Find All genres
+    /****************Find All Genres****************/
     @Test
     void findAll_ReturnsAllGenres() {
         when(genreRepo.findAll())
@@ -63,7 +63,7 @@ class GenreServiceTest {
         verify(genreRepo).findAll();
     }
 
-    //Create
+    /****************Create****************/
     @Test
     void create_success_savesAndReturnsDTO() {
         var rq = new GenreRequestDTO("Reggaeton");
@@ -99,7 +99,7 @@ class GenreServiceTest {
         verify(genreRepo, never()).save(any());
     }
 
-    //Update
+    /****************Update****************/
      @Test
     void update_success_changeName() {
         var existingGenre = genre(5L, "Rock");
@@ -128,8 +128,7 @@ class GenreServiceTest {
     }
 
 
-
-    //Remove
+    /****************Remove****************/
     @Test
     void removeGenre() throws Exception {
         when(genreRepo.existsById(1L)).thenReturn(false);
@@ -141,6 +140,8 @@ class GenreServiceTest {
         verify(genreRepo, never()).save(any());
     }
 
+
+    /****************FindById & FindByName****************/
     @Test
     void create_and_findById_success() {
         var rq = new GenreRequestDTO("Salsa");
