@@ -169,8 +169,25 @@ class GenreServiceTest {
 
     @Test
     void create_and_findByName_success() {
+        var rq = new GenreRequestDTO("Bachata");
+        when(genreRepo.existsByNameIgnoreCase("Bachata")).thenReturn(false);
+        when(genreRepo.save(any(Genre.class))).thenAnswer(inv -> {
+            Genre g = inv.getArgument(0);
+            g.setId(2L);
+            return g;
+        });
 
+        when(genreRepo.findByNameIgnoreCase("Bachata")).thenReturn(Optional.of(genre(2L, "Bachata")));
 
+        GenreResponseDTO created = genreService.create(rq);
+        GenreResponseDTO found = genreService.findByName(" Bachata ");
 
+        assertEquals(2L, created.id());
+        assertEquals("Bachata", created.name());
+        assertEquals(2L, found.id());
+        assertEquals("Bachata", found.name());
+        verify(genreRepo).existsByNameIgnoreCase("Bachata");
+        verify(genreRepo).save(argThat(g -> "Bachata".equals(g.getName())));
+        verify(genreRepo).findByNameIgnoreCase("Bachata");
     }
 }
